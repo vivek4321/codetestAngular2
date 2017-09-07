@@ -1,0 +1,98 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="row">
+  <div class="container">
+    <div class="col-md-12">
+<table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>firstName</th>
+          <th>lastName</th>
+          <th>jobTitleName</th>
+          <th>phoneNumber</th>
+          <th>emailAddress</th>
+          <th>skills</th>
+          <th>Add</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let employee of employees; let i=index">      
+              <td>{{employee.firstName}}</td>
+              <td>{{employee.lastName}}</td>
+              <td>{{employee.jobTitleName}}</td>
+              <td>{{employee.phoneNumber}}</td>
+              <td>{{employee.emailAddress}}</td>
+              <td>
+                <span *ngFor="let skillsNum of employee.skills">
+                    <span>{{skills[skillsNum-1].displayName}}</span>                    
+                </span>
+              </td>
+              <td><button (click)="addForm()" ng class="btn btn-primary">Add</button></td>
+              <td><button class="btn btn-primary">Edit</button></td>
+              <td><button class="btn btn-primary">Delete</button></td>
+             </tr>
+      </tbody>
+    </table>
+
+
+    <form *ngIf="showForm"  (ngSubmit)="employeeForm.valid && register(employeeForm.value)" #employeeForm="ngForm" >
+        <h2>Add Employee</h2>
+          <fieldset>
+              <div class="form-group">
+                <input class="form-control" #firstName="ngModel" placeholder="firstName" type="text"  ngModel name="firstName" required>
+                <span style="color:red" >
+                  <span *ngIf="firstName.errors?.required && firstName.touched">firstName is required.</span>
+                </span>
+              </div>
+              <div class="form-group">
+                <input class="form-control" #lastName="ngModel" placeholder="lastName" type="email"  ngModel name="lastName" required>
+                
+                <span style="color:red" >
+                  <span *ngIf="lastName.errors?.required && lastName.touched">lastName is required.</span>
+                </span>
+              </div>
+              <div class="form-group">
+                  <input class="form-control" #jobTitleName="ngModel" placeholder="jobTitleName" type="email"  ngModel name="jobTitleName" required>
+                  <span style="color:red" >
+                    <span *ngIf="jobTitleName.errors?.required && jobTitleName.touched">jobTitleName is required.</span>  
+                  </span>
+              </div>
+              <div class="form-group">
+                    <input class="form-control" #phoneNumber="ngModel" placeholder="phoneNumber" type="number"  ngModel name="phoneNumber" required>
+                    <span style="color:red" >
+                      <span *ngIf="phoneNumber.errors?.required && phoneNumber.touched">phoneNumber is required.</span>    
+                    </span>
+              </div>
+              <div class="form-group">
+                  <input class="form-control" #emailAddress="ngModel" ngControl="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$" placeholder="E-mail" type="email"  ngModel name="emailAddress" required>
+                  <div style="color:red" *ngIf="emailAddress.valid || emailAddress.touched">
+                      <div *ngIf="emailAddress.errors && emailAddress.errors.required">
+                          Email is required
+                      </div>
+                      <div *ngIf="emailAddress.errors && emailAddress.errors.pattern">
+                          Email is invalid
+                      </div>
+                  </div>                  
+            </div>
+
+            <div class="form-group">
+                <select multiple #skillsSet="ngModel" ngModel name="skills" required>
+                    <option *ngFor="let item of skills" [value]="item.id">{{item.displayName}}</option>
+                </select>
+              <span style="color:red" >
+                <span *ngIf="skillsSet.errors?.required && skillsSet.touched">Skills is required.</span>
+              </span>
+        </div>   
+        <div class="form-group">              
+            <div style="color:red" >
+                <span *ngIf=" submitted && employeeForm.invalid">Please fill all the mandatory fields</span>
+            </div>
+              <input (click)="submitForm()" type="submit" class="btn btn-md btn-primary" value="Save" >
+        </div>
+          </fieldset>
+      </form>
+    </div>
+  </div>
+<div>
+
