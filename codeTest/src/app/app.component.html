@@ -37,7 +37,7 @@
 
 
     <form *ngIf="showForm"  (ngSubmit)="employeeForm.valid && register(employeeForm.value)" #employeeForm="ngForm" >
-        <h2>Add Employee</h2>
+        <h2>Add Employee </h2>
           <fieldset>
               <div class="form-group">
                 <input class="form-control" #firstName="ngModel" placeholder="firstName" type="text"  ngModel name="firstName" required>
